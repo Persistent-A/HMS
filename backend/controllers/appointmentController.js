@@ -1,22 +1,28 @@
 const asyncHandler = require('express-async-handler')
 
 const Appointment = require('../model/appointmentModel')
-const User = require('../model/userModel')
+const User = require('../model/doctorModel')
 
 const getAppointments = asyncHandler(async (req, res) => {
-    const appointments = await Appointment.find({ user: req.user.id })
+    const appointments = await Appointment.find({ department: req.doctor.department })
 
     res.status(200).json(appointments)
 })
 
 const setAppointment = asyncHandler(async (req, res) => {
-    if(!req.body.text){
+    if(!req.body){
         res.status(400)
-        throw new Error('Please add a text field')
+        throw new Error('Please add all the fields')
     }
     const appointment = await Appointment.create({
-        text: req.body.text,
-        user: req.user.id,
+        // user: req.user.id,
+        name: req.body.name,
+        age: req.body.age,
+        phone: req.body.phone,
+        email: req.body.email,
+        address: req.body.address,
+        date: req.body.date,
+        department: req.body.department
     })
 
     res.status(200).json(appointment)

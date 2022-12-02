@@ -1,24 +1,26 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
-const User = require('../model/userModel')
+const Doctor = require('../model/doctorModel')
 
 //@desc Register a new user
 //@route  POST/api/users
 //@access Public
 
-const registerUser = asyncHandler (async (req, res) => {
-    const {name, email, password} = req.body
+const registerDoctor = asyncHandler (async (req, res) => {
+    const {name, employee_id, password, department} = req.body
 
-    if(!name || !email || !password){
+    console.log(req.body)
+
+    if(!name || !employee_id || !password ||!department){
         res.status(400)
         throw new Error('Please add all fields ')
     }
 
     //Check if user exists
-    const userExists = await User.findOne({email})
+    const doctorExists = await Doctor.findOne({employee_id})
 
-    if(userExists){
+    if(doctorExists){
         res.status(400)
         throw new Error('User already exists.')
     }
@@ -28,18 +30,20 @@ const registerUser = asyncHandler (async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     //Create user
-    const user = await User.create({
+    const doctor = await Doctor.create({
         name,
-        email,
-        password: hashedPassword
+        employee_id,
+        password: hashedPassword,
+        department
     })
 
-    if(user) {
+    if(doctor) {
         res.status(201).json({
-            _id: user.id,
-            name: user.name,
-            email: user.email,
-            token: generateToken(user._id)
+            _id: doctor.id,
+            name: doctor.name,
+            employee_id: doctor.employee_id,
+            department: doctor.department,
+            token: generateToken(doctor._id)
         })
     } else {
         res.status(400)
@@ -51,17 +55,17 @@ const registerUser = asyncHandler (async (req, res) => {
 //@route  POST/api/users/login
 //@access Public
 
-const loginUser = asyncHandler (async (req, res) => {
-    const {email, password} = req.body
+const loginDoctor = asyncHandler (async (req, res) => {
+    const {employee_id, password} = req.body
 
-    const user = await User.findOne({email})
+    const doctor = await Doctor.findOne({employee_id})
 
-    if(user && (await bcrypt.compare(password, user.password))){
+    if(doctor && (await bcrypt.compare(password, doctor.password))){
         res.json({
-            _id: user.id,
-            name: user.name,
-            email: user.email,
-            token: generateToken(user._id)
+            _id: doctor.id,
+            name: doctor.name,
+            employee_id: doctor.employee_id,
+            token: generateToken(doctor._id)
         })
     } else {
         res.status(400)
@@ -74,11 +78,11 @@ const loginUser = asyncHandler (async (req, res) => {
 //@access Private
 
 const getMe = asyncHandler (async (req, res) => {
-    const {_id, name, email } = await User.findById(req.user.id)
+    const {_id, name, employee_id } = await User.findById(req.doctor.id)
     res.status(200).json({
         id: _id,
         name,
-        email,
+        employee_id,
     })
 })
 
@@ -89,4 +93,4 @@ const generateToken = (id) => {
     })
 }
 
-module.exports = {registerUser, loginUser, getMe}
+module.exports = {registerDoctor, loginDoctor, getMe}
