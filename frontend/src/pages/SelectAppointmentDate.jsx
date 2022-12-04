@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import PatientDetailsCard from "../components/PatientDetailsCard"
 import {doctorsAppointments} from '../features/auth/authSlice'
 
 function SelectAppointmentDate() {
     
     const [selectedDate, setSelectedDate] = useState('')
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {doctor, appointments} = useSelector((state) => state.auth)
+    const { appointments } = useSelector((state) => state.auth)
 
 
     const showPatientDetails = (e) => {
