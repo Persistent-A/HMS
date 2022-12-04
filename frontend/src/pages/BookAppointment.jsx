@@ -67,12 +67,12 @@ function BookAppointment() {
     }
 
   return <>
-    <Box onSubmit={onSubmit} component='form' sx={{border: "1px solid grey", width: "50%", margin: '50px auto', display: "flex", flexDirection:"column", alignItems:"center"}}> 
+    <Box sx={{border: "1px solid grey", width: "50%", margin: '50px auto', display: "flex", flexDirection:"column", alignItems:"center"}}> 
         <h1>
             <FaUser /> Book an Appointment
         </h1>
         <p>Please fill the details to book an Appointment</p>
-        <form>
+        <form onSubmit={onSubmit}>
             <div>
                 <TextField variant="standard" type = 'name' sx={{width: 400}} id='name' name='name' value={name} placeholder='Enter you name' onChange={onChange} required/>
             </div>
