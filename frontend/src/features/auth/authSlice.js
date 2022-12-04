@@ -104,20 +104,10 @@ export const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-            // .addCase(logoutDoctor.pending, (state)=>{
-            //     state.isLoading = true
-            // })
             .addCase(logoutDoctor.fulfilled, (state)=>{
-                // state.isLoading = false
-                // state.isSuccess = true
                 state.doctor = null
                 state.appointments = []
             })
-            // .addCase(logoutDoctor.rejected, (state, action)=>{
-            //     state.isLoading = false
-            //     state.isError = true
-            //     state.message = action.payload
-            // })
             .addCase(login.pending, (state) =>{
                 state.isLoading = true
             })
