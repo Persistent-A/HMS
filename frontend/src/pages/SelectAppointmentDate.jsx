@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 import PatientDetailsCard from "../components/PatientDetailsCard"
 import {doctorsAppointments} from '../features/auth/authSlice'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 function SelectAppointmentDate() {
     
@@ -19,22 +21,22 @@ function SelectAppointmentDate() {
 
   return (
     <>
-        <form className='doctorportal-form' onSubmit={showPatientDetails}>
+        <Box component="form" onSubmit={showPatientDetails} sx={{ width:"50%", padding: "30px", display: "flex", flexDirection:"column", alignItems:"center", margin:"10px auto"}}>
                 <h1>Welcome to your scheduled appointment</h1>
                 <div className='doctorportal-form-row'>
                     <label>Select date of appointment:</label>
-                    <input type='date' 
-                    value={selectedDate} onChange={(e)=>setSelectedDate(e.target.value)}
-                    />
+                    <input type='date' value={selectedDate} onChange={(e)=>setSelectedDate(e.target.value)}/>
                 </div>
-                <input type='submit' value='Click to Check' />
-        </form>
-        {appointments
-        ? appointments.map((appointment) => 
-            <PatientDetailsCard key={appointment.id} appointment={appointment} selectedDate={selectedDate}/>
-        )
-        :`No Appointments for the date: ${selectedDate}` 
-        }
+                <Button variant="contained" color="primary" sx={{width:"50%", margin: "50px"}} type='submit'>Click to Check</Button>
+        </Box>
+        <Box sx={{ border:"1px solid grey",  padding: "30px", display: "flex", flexDirection:"row", alignItems:"space-around", margin:"10px auto"}}>
+            {appointments[0]
+            ? appointments.map((appointment) => 
+                <PatientDetailsCard key={appointment.id} appointment={appointment} selectedDate={selectedDate}/>
+            )
+            :`No Appointments for the date: ${selectedDate}` 
+            }  
+        </Box>
     </>
 
   )

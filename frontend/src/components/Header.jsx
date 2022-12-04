@@ -5,8 +5,22 @@ import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutDoctor, reset } from '../features/auth/authSlice'
 
+//MATERIAL UI
+import Button from '@mui/material/Button'
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 
 function Header() {
+
+    const linkStyle = {
+        margin: "1rem",
+        textDecoration: "none",
+        color: 'white'
+    };
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -20,35 +34,44 @@ function Header() {
     }
 
   return (
-    <header>
-        <div className='logo'>
+    
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             HMS
-        </div>
-        <ul>
-            {doctor 
-            ?(<li>
-                <button onClick={logoutDoc}>
-                    <FaSignOutAlt/> Logout
-                </button>
-            </li>)
+          </Typography>
+          {doctor 
+            ?(
+            <Button variant="contained" color="primary" onClick={logoutDoc}>
+                <FaSignOutAlt/> Logout
+            </Button>
+            )
             :(
-            <>
-                <li>
-                    <Link to='/login'>
-                        <FaSignInAlt/>For Doctor
-                    </Link>
-                </li>
-                <li>
-                    <Link to='/book_appointment'>
-                        <FaUser /> For Patient
-                    </Link>
-                </li>
-            </>)
+            <Box sx={{
+                width: 270,
+                display: 'flex',
+                justifyContent: 'space-around',
+            }}>
+                <Link to='/login' style={linkStyle}>
+                    <FaSignInAlt/>For Doctor
+                </Link> 
+                <Link to='/book_appointment' style={linkStyle}>
+                    <FaUser /> For Patient
+                </Link>
+            </Box>)
             }
-            
-            
-        </ul>
-    </header>
+        </Toolbar>
+      </AppBar>
+    </Box>
   )
 }
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { changeAppointmentDate } from '../features/auth/authSlice'
+import Button from '@mui/material/Button'
 
 const ReSchedule = ({appointment, selectedDate}) => {
     const [reDate, setReDate] = useState()
@@ -22,7 +23,7 @@ const ReSchedule = ({appointment, selectedDate}) => {
     <form onSubmit={reSchedule}>
       <label>Select date to reschedule the appoinment: </label>
       <input type="date" value={reDate} onChange={(e)=>setReDate(e.target.value)}/>
-      <input type='submit' value='Reschedule'/>
+      <Button size='small' variant="contained" color="primary" type='submit'>Reschedule</Button> 
     </form>
   )
 }
