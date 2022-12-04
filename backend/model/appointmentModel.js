@@ -27,7 +27,7 @@ const appointmentSchema = mongoose.Schema({
         required: [true, 'Please fill this field']
     },
     date: {
-        type: Date,
+        type: String,
         required: [true, 'Please fill this field']
     },
     department: {

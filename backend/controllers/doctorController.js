@@ -22,7 +22,7 @@ const registerDoctor = asyncHandler (async (req, res) => {
 
     if(doctorExists){
         res.status(400)
-        throw new Error('User already exists.')
+        throw new Error('doctor already exists.')
     }
 
     //Hash password
@@ -47,7 +47,7 @@ const registerDoctor = asyncHandler (async (req, res) => {
         })
     } else {
         res.status(400)
-        throw new Error('Invalid user data')
+        throw new Error('Invalid doctor data')
     }
 })
 
@@ -65,7 +65,7 @@ const loginDoctor = asyncHandler (async (req, res) => {
             _id: doctor.id,
             name: doctor.name,
             employee_id: doctor.employee_id,
-            token: generateToken(doctor._id)
+            token: generateToken(doctor._id),
         })
     } else {
         res.status(400)
@@ -78,12 +78,8 @@ const loginDoctor = asyncHandler (async (req, res) => {
 //@access Private
 
 const getMe = asyncHandler (async (req, res) => {
-    const {_id, name, employee_id } = await User.findById(req.doctor.id)
-    res.status(200).json({
-        id: _id,
-        name,
-        employee_id,
-    })
+
+    res.status(200).json(req.doctor)
 })
 
 //Generate JWT

@@ -1,7 +1,12 @@
 import {useState, useEffect, useRef} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {bookAppointment, reset} from '../features/auth/authSlice'
 import {FaUser} from 'react-icons/fa'
+// import Spinner from '../components/Spinner'
 
-function Register() {
+function BookAppointment() {
 
     const dropdown = useRef()
 
@@ -17,6 +22,26 @@ function Register() {
 
     const { name, age, phone, email, address, date, department } = formData
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const {appointments, isLoading, isError, isSuccess, message} = useSelector(
+        (state) => state.auth 
+    )
+
+    useEffect(()=>{
+        if(isError){
+            toast.error(message)
+        }
+
+        if(isSuccess) {
+            navigate('/')
+            dispatch(reset())
+        }
+    }, [appointments, isError, isSuccess, message, navigate, dispatch])
+    
+    
+
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -26,6 +51,15 @@ function Register() {
 
     const onSubmit = (e) => {
         e.preventDefault()
+
+        const appointmentData = {
+            name, age, phone, email, address, date, department 
+        }
+        dispatch(bookAppointment(appointmentData))   
+    }
+
+    if(isLoading){
+        return <h1>Loading....</h1>
     }
 
   return <>
@@ -59,18 +93,18 @@ function Register() {
             <div>
                 {/* <input type = 'department' id='department' name='department' value={department} placeholder='Select department' onChange={onChange}/> */}
                 <label>Select Department: </label>
-                <select  ref={dropdown} onChange={onChange}>
+                <select type='department' name='department' ref={dropdown} onChange={onChange}>
                     <option value='' defaultChecked>-----</option>
                     <option value='er'>ER</option>
                     <option value='neuro'>Neuro</option>
                 </select>
             </div>
             <div>
-                <button>Submit</button>
+                <input type='submit' value='Booak an Appointment'/>
             </div>
         </form>
     </section>
   </>
 }
 
-export default Register
+export default BookAppointment

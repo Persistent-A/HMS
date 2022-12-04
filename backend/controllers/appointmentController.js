@@ -1,21 +1,22 @@
 const asyncHandler = require('express-async-handler')
 
 const Appointment = require('../model/appointmentModel')
-const User = require('../model/doctorModel')
+const Doctor = require('../model/doctorModel')
 
 const getAppointments = asyncHandler(async (req, res) => {
     const appointments = await Appointment.find({ department: req.doctor.department })
-
-    res.status(200).json(appointments)
+    const filteredAppointments = appointments.filter((appointment) => appointment.date === req.body.date)
+    res.status(200).json(filteredAppointments)
 })
 
 const setAppointment = asyncHandler(async (req, res) => {
+    // console.log(req.body)
     if(!req.body){
         res.status(400)
         throw new Error('Please add all the fields')
     }
     const appointment = await Appointment.create({
-        // user: req.user.id,
+        // doctor: req.doctor.id,
         name: req.body.name,
         age: req.body.age,
         phone: req.body.phone,
@@ -36,18 +37,16 @@ const updateAppointment = asyncHandler(async (req, res) => {
         throw new Error('Appointment not found')
     }
 
-    const user = await User.findById(req.user.id)
-
-    //check for user
-    if(!user){
+    //check for doctor
+    if(!req.doctor){
         res.status(401)
-        throw new Error('User not found')
+        throw new Error('Doctor not found')
     }
 
-    //make sure the loggin user matches the appointment user
-    if(appointment.user.toString() !== user.id){
+    //make sure the loggin doctor matches the appointment doctor
+    if(appointment.department !== req.doctor.department){
         res.status(401)
-        throw new Error('User not authorized')
+        throw new Error('doctor not authorized')
     }
 
     const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, req.body, {new: true})
@@ -63,21 +62,20 @@ const deleteAppointment = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Appointment not found')
     }
-    const user = await User.findById(req.user.id)
-      //check for user
-    if(!user){
+      //check for doctor
+    if(!req.doctor){
         res.status(401)
-        throw new Error('User not found')
+        throw new Error('doctor not found')
     }
 
-    //make sure the loggin user matches the appointment user
-    if(appointment.user.toString() !== user.id){
+    //make sure the loggin doctor matches the appointment doctor
+    if(appointment.department !== req.doctor.department){
         res.status(401)
-        throw new Error('User not authorized')
+        throw new Error('doctor not authorized')
     }
     await appointment.remove()
     
-    res.status(200).json({ id: req.params.id })
+    res.status(200).json({id: req.params.id})
 })
 
 module.exports = {getAppointments, setAppointment, updateAppointment, deleteAppointment}

@@ -4,17 +4,15 @@ const Doctor = require('../model/doctorModel')
 
 const protect = asyncHandler(async(req, res, next) => {
     let token
-
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try{
             //Get token from header
             token = req.headers.authorization.split(' ')[1]
             // verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            console.log(decoded)
             //GET USER FROM THE TOKEN
             req.doctor = await Doctor.findById(decoded.id).select('-password')
-            console.log(req.doctor)
+            // console.log(req.doctor)
             next()
 
         } catch (error){

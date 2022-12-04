@@ -1,8 +1,11 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Dashboard from './pages/Dashboard'
-import Header from './components/Header';
+// import {ToastContainer} from 'react-toastify'
+import Home from './pages/Home'
+import Header from './components/Header'
 import Login from './pages/Login'
-import Register from './pages/Register';
+import BookAppointment from './pages/BookAppointment'
+import ScheduledAppointment from './pages/ScheduledAppointment'
+import SelectAppointmentDate from './pages/SelectAppointmentDate'
 
 function App() {
   return (
@@ -11,12 +14,15 @@ function App() {
         <div className='conatiner'>
           <Header/>
           <Routes>
-            <Route path = '/' element={<Dashboard />}/>
+            <Route path = '/' element={<Home />}/>
             <Route path = '/login' element={<Login />}/>
-            <Route path = '/register' element={<Register />}/>
+            <Route path = '/appointments' element={<ScheduledAppointment/>}/>
+            <Route path = '/book_appointment' element={<BookAppointment />}/>
+            <Route path = '/select_appointment_date' element={<SelectAppointmentDate />}/>
           </Routes>
         </div>
       </Router>
+      {/* <ToastContainer/> */}
     </>
   );
 }
