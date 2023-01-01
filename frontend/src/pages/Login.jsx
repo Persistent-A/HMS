@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react'
-import {FaSignInAlt} from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -8,6 +7,13 @@ import Spinner from '../components/Spinner'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+
 
 function Login() {
 
@@ -58,29 +64,39 @@ function Login() {
       return <Spinner />
     }
 
+    const theme = createTheme();
+
   return (
-    <>
-      <Box sx={{ border: "1px solid grey", width: "50%", height: 220, margin: '100px auto', padding: "30px", display: "flex", flexDirection:"column", alignItems:"center"}}> 
-        <section>
-            <h1>
-                <FaSignInAlt /> Login
-            </h1>
-        </section>
-        <section>
-            <Box onSubmit={onSubmit} component='form'> 
-                <div>
-                    <TextField variant="standard" sx={{width: 400}} type = 'employee_id' id='employee_id' name='employee_id' value={employee_id} placeholder='Enter you employee_id' onChange={onChange}/>
-                </div>
-                <div>
-                    <TextField variant="standard" sx={{width: 400}} type = 'password' id='password' name='password' value={password} placeholder='Enter you password' onChange={onChange}/>
-                </div>
-                <div>
-                    <Button variant="outlined" color="secondary"sx={{width: 400, margin:"20px 0px"}} type='submit'>Login</Button>
-                </div>
-            </Box>
-        </section>
-      </Box>
-    </>
+    <div style={{minHeight:"70vh"}}>
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+              Sign in
+          </Typography>
+          
+          <Box onSubmit={onSubmit} component='form' noValidate sx={{ mt: 1 }}>    
+            <TextField autoFocus variant="standard" margin="normal" fullWidth required type='employee_id' id='employee_id' name='employee_id' value={employee_id} placeholder='Enter you employee_id' onChange={onChange}/>
+          
+            <TextField variant="standard" margin="normal" fullWidth required type='password' id='password' name='password' value={password} placeholder='Enter you password' onChange={onChange}/>
+          
+            <Button variant="outlined" color="secondary" sx={{mt: 2, mb: 5}} fullWidth  type='submit'>Login</Button> 
+          </Box>  
+        </Box>
+        </Container>
+    </ThemeProvider>
+    </div>
   )
 }
 

@@ -1,10 +1,8 @@
-import Box from '@mui/material/Box'
-
 function Home() {
   return (
-    <Box sx={{textAlign:"center", fontSize:"large", marginTop:"50px", height:"1000px"}}>
-      <div>Medical center</div>
-    </Box>
+    <div style={{textAlign:"center", fontSize:"large", minHeight:"70vh", color:"white"}} className="images" >
+      <div style={{paddingTop:"40px"}}>Medical center</div>
+    </div>
   )
 }
 

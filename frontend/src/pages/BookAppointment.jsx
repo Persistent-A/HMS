@@ -3,12 +3,17 @@ import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {bookAppointment, reset} from '../features/auth/authSlice'
-import {FaUser} from 'react-icons/fa'
 // import Spinner from '../components/Spinner'
 //Material-UI
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 
 function BookAppointment() {
 
@@ -66,47 +71,60 @@ function BookAppointment() {
         return <h1>Loading....</h1>
     }
 
-  return <>
-    <Box sx={{border: "1px solid grey", width: "50%", margin: '50px auto', display: "flex", flexDirection:"column", alignItems:"center"}}> 
-        <h1>
-            <FaUser /> Book an Appointment
-        </h1>
-        <p>Please fill the details to book an Appointment</p>
-        <form onSubmit={onSubmit}>
-            <div>
-                <TextField variant="standard" type = 'name' sx={{width: 400}} id='name' name='name' value={name} placeholder='Enter you name' onChange={onChange} required/>
-            </div>
-            <div>
-                <TextField variant="standard" type = 'age' sx={{width: 400}} id='age' name='age' value={age} placeholder='Enter you age' onChange={onChange} required/>
-            </div>
-            <div>
-                <TextField variant="standard" type = 'phone' sx={{width: 400}} id='phone' name='phone' value={phone} placeholder='Enter you phone' onChange={onChange} required/>
-            </div>
-            <div>
-                <TextField variant="standard" type = 'email' sx={{width: 400}} id='email' name='email' value={email} placeholder='Enter you email' onChange={onChange} required/>
-            </div>
-            <div>
-                <TextField variant="standard" type = 'address' sx={{width: 400}} id='address' name='address' value={address} placeholder='Enter you address' onChange={onChange} required/>
-            </div>
-            <div style={{margin : "10px", display:"flex", justifyContent: 'space-around', alignItems:"center", width: 400}}>
-                <label>Select Date: </label>
-                <TextField variant="standard" type = 'date' id='date' name='date' value={date} placeholder='Select date' onChange={onChange}/>
-            </div>
-            <div style={{ display:"flex", justifyContent: 'space-around', width: 400, margin: "0px 20px 30px 0px"}}>
-                {/* <input type = 'department' id='department' name='department' value={department} placeholder='Select department' onChange={onChange}/> */}
-                <label>Select Department: </label>
-                <select type='department' name='department' ref={dropdown} onChange={onChange}>
-                    <option value='' defaultChecked>-----</option>
-                    <option value='er'>ER</option>
-                    <option value='neuro'>Neuro</option>
-                </select>
-            </div>
-            <div>
-            <Button sx={{float: "right", marginBottom: "20px"}} variant="outlined" color="secondary" type='submit'>Book Appointment</Button>
-            </div>
-        </form>
-    </Box>
-  </>
+    const theme = createTheme();
+
+  return <div style={{minHeight:"70vh"}}>
+    <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+        {/* <Box sx={{border: "1px solid grey", width: "50%", margin: '50px auto', display: "flex", flexDirection:"column", alignItems:"center"}}>  */}
+            <Box
+                sx={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <PersonAddIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Book an Appointment
+            </Typography>
+            <Typography component="h2" variant="h6">
+                Please fill the details 
+            </Typography>
+            <Box onSubmit={onSubmit} component='form' noValidate sx={{ width: '95%', m: 1}}>    
+                <TextField variant="standard" margin="normal" fullWidth type = 'name' id='name' name='name' value={name} placeholder='Enter you name' onChange={onChange} required/>
+                
+                <TextField variant="standard" margin="normal" fullWidth type = 'age' id='age' name='age' value={age} placeholder='Enter you age' onChange={onChange} required/>
+                
+                <TextField variant="standard" margin="normal" fullWidth type = 'phone' id='phone' name='phone' value={phone} placeholder='Enter you phone' onChange={onChange} required/>
+            
+                <TextField variant="standard" margin="normal" fullWidth type = 'email' id='email' name='email' value={email} placeholder='Enter you email' onChange={onChange} required/>
+        
+                <TextField variant="standard" margin="normal" fullWidth type = 'address' id='address' name='address' value={address} placeholder='Enter you address' onChange={onChange} required/>
+            
+                <div style={{ display:"flex", justifyContent: 'space-between', alignItems:"center", width: '80%'}}>
+                    <label>Select Date: </label>
+                    <TextField variant="standard" type = 'date' id='date' name='date' value={date} placeholder='Select date' onChange={onChange}/>
+                </div>
+                <div style={{ display:"flex", justifyContent: 'space-between', width: '80%', marginTop: "10px"}}>
+                    {/* <input type = 'department' id='department' name='department' value={department} placeholder='Select department' onChange={onChange}/> */}
+                    <label>Select Department: </label>
+                    <select type='department' name='department' ref={dropdown} onChange={onChange}>
+                        <option value='' defaultChecked>-----</option>
+                        <option value='er'>ER</option>
+                        <option value='neuro'>Neuro</option>
+                    </select>
+                </div>
+                <Button variant="outlined" color="secondary" sx={{mt: 3, mb: 3}} fullWidth  type='submit'>Book Appointment</Button> 
+            </Box>  
+            </Box>
+        </Container>
+    </ThemeProvider>
+  </div>
 }
 
 export default BookAppointment

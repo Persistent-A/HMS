@@ -5,24 +5,23 @@ import Home from './pages/Home'
 import Header from './components/Header'
 import Login from './pages/Login'
 import BookAppointment from './pages/BookAppointment'
-// import ScheduledAppointment from './pages/ScheduledAppointment'
 import SelectAppointmentDate from './pages/SelectAppointmentDate'
+import Footer from './components/Footer'
 
 function App() {
   return (
     <>
       <Router>
-        <div>
-          <Header/>
-          <Routes>
-            <Route path = '/' element={<Home />}/>
-            <Route path = '/login' element={<Login />}/>
-            {/* <Route path = '/appointments' element={<ScheduledAppointment/>}/> */}
-            <Route path = '/book_appointment' element={<BookAppointment />}/>
-            <Route path = '/select_appointment_date' element={<SelectAppointmentDate />}/>
-          </Routes>
-        </div>
+              <Header/>
+              <Routes>
+                <Route path = '/' element={<Home />}/>
+                <Route path = '/login' element={<Login />}/>
+                <Route path = '/book_appointment' element={<BookAppointment />}/>
+                <Route path = '/select_appointment_date' element={<SelectAppointmentDate />}/>
+              </Routes>
+              <Footer/>
       </Router>
+      
       {/* <ToastContainer/> */}
     </>
   );
