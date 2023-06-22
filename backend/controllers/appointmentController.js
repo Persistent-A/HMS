@@ -3,6 +3,14 @@ const asyncHandler = require('express-async-handler')
 const Appointment = require('../model/appointmentModel')
 const Doctor = require('../model/doctorModel')
 
+const getAllAppointments = asyncHandler(async (req, res) => {
+    const appointments = await Appointment.find({
+      department: req.doctor.department,
+      isComplete: false,
+    });
+    res.status(200).json(appointments);
+  });
+
 const getAppointments = asyncHandler(async (req, res) => {
     const appointments = await Appointment.find({ department: req.doctor.department })
     const filteredAppointments = appointments.filter((appointment) => appointment.date === req.body.date)
@@ -78,4 +86,4 @@ const deleteAppointment = asyncHandler(async (req, res) => {
     res.status(200).json({id: req.params.id})
 })
 
-module.exports = {getAppointments, setAppointment, updateAppointment, deleteAppointment}
+module.exports = {getAllAppointments, getAppointments, setAppointment, updateAppointment, deleteAppointment}

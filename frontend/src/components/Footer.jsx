@@ -17,15 +17,15 @@ function Footer() {
                 <Grid container spacing={5}>
                     <Grid item xs={12} sm={6}>
                         <Box borderBottom={1} textAlign="center">Follow Us</Box>
-                        <Box textAlign="center" sx={{cursor:"pointer", color: "violet"}}>
-                            <FacebookIcon/> <InstagramIcon/> <TwitterIcon/>
+                        <Box textAlign="center" sx={{cursor:"pointer"}} style={{marginTop: "10px"}}>
+                        <a href="https://www.facebook.com/tavcollege/"><FacebookIcon style={{color:"white"}}/></a> <a href="https://www.instagram.com/tavcollege/?hl=en"><InstagramIcon style={{color:"white"}}/></a> <a href="https://twitter.com/tavcollege?lang=en"><TwitterIcon style={{color:"white"}}/></a>
                         </Box>
                         
                     </Grid>
                    
                     <Grid item xs={12} sm={6} textAlign="center">
                         <Box borderBottom={1}>Location</Box>
-                        <Box>
+                        <Box style={{marginTop: "10px"}}>
                         <a href="https://www.google.com/maps/dir/45.5125128,-73.6133979/tav+college/@45.5003233,-73.645619,14z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x4cc919deffd38fa7:0x2572105e7bf86853!2m2!1d-73.6431749!2d45.490253" target="_blank" rel="noopener noreferrer" style={{color:"white"}}>TAV College</a>
                         </Box>                        
                     </Grid>

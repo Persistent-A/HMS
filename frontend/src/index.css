@@ -1,14 +1,20 @@
-*{
-    box-sizing: border-box; /* To prevent border collapse. */
-    margin: 0;
-    padding: 0;
-    text-decoration: none; /* To remove any decoration in the text. */
-    list-style: none; 
+* {
+  box-sizing: border-box; /* To prevent border collapse. */
+  margin: 0;
+  padding: 0;
+  text-decoration: none; /* To remove any decoration in the text. */
+  list-style: none;
 }
-.images{
-    background-image: url("./images/pexels-jonathan-borba-13697925.jpg");
-    background-repeat: no-repeat;   
-    background-size: cover;
-    background-color: black;
-    height: 100vh;
+.images {
+  background-image: url("./images/pexels-jonathan-borba-13697925.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black;
+  height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    display: none;
+  }
 }
